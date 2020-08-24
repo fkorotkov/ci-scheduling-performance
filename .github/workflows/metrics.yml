@@ -1,0 +1,58 @@
+name: Collect Metrics
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Start timestamp
+      run: date +%s > start.txt
+    - uses: actions/checkout@v2
+    - name: After checkout timestamp
+      run: date +%s > checkout.txt
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v1.4.3
+    - name: After install timestamp
+      run: date +%s > install.txt
+    - name: Last commit timestamp
+      run: git log -1 --format=%ct > commit.txt
+    - name: Report metrics
+      run: |
+        COMMIT=$(cat commit.txt)
+        START=$(cat start.txt)
+        CHECKOUT=$(cat checkout.txt)
+        INSTALL=$(cat install.txt)
+        
+        SCHEDULING_DURATION=`expr $START - $COMMIT`
+        CHECKOUT_DURATION=`expr $CHECKOUT - $START`
+        INSTALL_DURATION=`expr $INSTALL - $CHECKOUT`
+        OVERALL_DURATION=`expr $INSTALL - $COMMIT`
+        
+        curl \
+          --header "Authorization: Token ef2344b2-142a-4cf8-baba-7c02bf73c039" \
+          --header "Content-Type: application/json" \
+          --data "{
+            \"values\":[
+              {
+                \"line\":\"Scheduling Duration\",
+                \"value\":\"$SCHEDULING_DURATION %\"
+              },
+              {
+                \"line\":\"Checkout Duration\",
+                \"value\":\"$CHECKOUT_DURATION %\"
+              },
+              {
+                \"line\":\"Install Duration\",
+                \"value\":\"$INSTALL_DURATION %\"
+              },
+              {
+                \"line\":\"Overall Duration\",
+                \"value\":\"$OVERALL_DURATION %\"
+              }
+            ],
+            \"sha\":\"${GITHUB_SHA}\"
+          }" \
+          https://seriesci.com/api/fkorotkov/ci-sheduling-performance/:series/many
