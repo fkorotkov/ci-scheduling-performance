@@ -38,19 +38,19 @@ jobs:
             \"values\":[
               {
                 \"line\":\"Scheduling Duration\",
-                \"value\":\"$SCHEDULING_DURATION %\"
+                \"value\":\"$SCHEDULING_DURATION ms\"
               },
               {
                 \"line\":\"Checkout Duration\",
-                \"value\":\"$CHECKOUT_DURATION %\"
+                \"value\":\"$CHECKOUT_DURATION ms\"
               },
               {
                 \"line\":\"Install Duration\",
-                \"value\":\"$INSTALL_DURATION %\"
+                \"value\":\"$INSTALL_DURATION ms\"
               },
               {
                 \"line\":\"Overall Duration\",
-                \"value\":\"$OVERALL_DURATION %\"
+                \"value\":\"$OVERALL_DURATION ms\"
               }
             ],
             \"sha\":\"${GITHUB_SHA}\"
