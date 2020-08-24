@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Start timestamp
-      run: date +%s > start.txt
+      run: date +%s > /tmp/start.txt
     - uses: actions/checkout@v2
     - name: After checkout timestamp
       run: date +%s > checkout.txt
@@ -21,9 +21,8 @@ jobs:
       run: git log -1 --format=%ct > commit.txt
     - name: Report metrics
       run: |
-        ls
         COMMIT=$(cat commit.txt)
-        START=$(cat start.txt)
+        START=$(cat /tmp/start.txt)
         CHECKOUT=$(cat checkout.txt)
         INSTALL=$(cat install.txt)
         
