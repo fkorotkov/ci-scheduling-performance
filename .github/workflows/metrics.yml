@@ -21,6 +21,7 @@ jobs:
       run: git log -1 --format=%ct > commit.txt
     - name: Report metrics
       run: |
+        ls
         COMMIT=$(cat commit.txt)
         START=$(cat start.txt)
         CHECKOUT=$(cat checkout.txt)
