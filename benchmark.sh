@@ -13,6 +13,6 @@ while [[ $UPTIME < $DURRATION ]]; do
   echo -n "Time remaining: "
   echo $(($DURRATION - $UPTIME))
 
-  sleep 60
+  sleep 180
   UPTIME=$(($(date +%s) - $START))
 done
