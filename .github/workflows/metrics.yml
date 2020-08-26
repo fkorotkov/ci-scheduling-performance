@@ -22,6 +22,8 @@ jobs:
     - name: Last commit timestamp
       run: git log -1 --format=%ct > commit.txt
     - name: Report metrics
+      env:
+        SERIES_CI_TOKEN: ${{ secrets.SERIES_CI_TOKEN }}
       run: |
         COMMIT=$(cat commit.txt)
         START=$(cat /tmp/start.txt)
@@ -34,7 +36,7 @@ jobs:
         OVERALL_DURATION=`expr $INSTALL - $COMMIT`
         
         curl \
-          --header "Authorization: Token ef2344b2-142a-4cf8-baba-7c02bf73c039" \
+          --header "Authorization: Token $SERIES_CI_TOKEN" \
           --header "Content-Type: application/json" \
           --data "{
             \"values\":[
