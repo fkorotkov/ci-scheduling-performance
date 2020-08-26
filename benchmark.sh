@@ -2,8 +2,10 @@ START=$(date +%s)
 DURRATION=$((60 * 60 * 24))
 UPTIME=$(($(date +%s) - $START))
 
+set -e
+
 while [[ $UPTIME < $DURRATION ]]; do
-  date %s > updates.txt
+  date +%s >> updates.txt
   git commit -m "Update on $(date)"
   git push -u origin master 
   
