@@ -35,7 +35,7 @@ jobs:
         INSTALL_DURATION=`expr $INSTALL - $CHECKOUT`
         OVERALL_DURATION=`expr $INSTALL - $COMMIT`
         
-        curl \
+        curl -i --retry 3 \
           --header "Authorization: Token $SERIES_CI_TOKEN" \
           --header "Content-Type: application/json" \
           --data "{
