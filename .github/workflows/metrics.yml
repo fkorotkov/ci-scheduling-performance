@@ -8,55 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Start timestamp
-      run: date +%s > /tmp/start.txt
-    - uses: actions/checkout@v2
-    - name: After checkout timestamp
-      run: date +%s > checkout.txt
-    - name: Setup Node.js environment
+    - name: Setup Go
       uses: actions/setup-go@v2
       with:
           go-version: 1.15
-    - name: After install timestamp
-      run: date +%s > install.txt
-    - name: Last commit timestamp
-      run: git log -1 --format=%ct > commit.txt
     - name: Report metrics
-      env:
-        SERIES_CI_TOKEN: ${{ secrets.SERIES_CI_TOKEN }}
-      run: |
-        COMMIT=$(cat commit.txt)
-        START=$(cat /tmp/start.txt)
-        CHECKOUT=$(cat checkout.txt)
-        INSTALL=$(cat install.txt)
-        
-        SCHEDULING_DURATION=`expr $START - $COMMIT`
-        CHECKOUT_DURATION=`expr $CHECKOUT - $START`
-        INSTALL_DURATION=`expr $INSTALL - $CHECKOUT`
-        OVERALL_DURATION=`expr $INSTALL - $COMMIT`
-        
-        curl -i --retry 3 \
-          --header "Authorization: Token $SERIES_CI_TOKEN" \
-          --header "Content-Type: application/json" \
-          --data "{
-            \"values\":[
-              {
-                \"line\":\"Scheduling Duration\",
-                \"value\":\"$SCHEDULING_DURATION s\"
-              },
-              {
-                \"line\":\"Checkout Duration\",
-                \"value\":\"$CHECKOUT_DURATION s\"
-              },
-              {
-                \"line\":\"Install Duration\",
-                \"value\":\"$INSTALL_DURATION s\"
-              },
-              {
-                \"line\":\"Overall Duration\",
-                \"value\":\"$OVERALL_DURATION s\"
-              }
-            ],
-            \"sha\":\"${GITHUB_SHA}\"
-          }" \
-          https://seriesci.com/api/fkorotkov/ci-sheduling-performance/:series/many
+      run: ./report.sh
