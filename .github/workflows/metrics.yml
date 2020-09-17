@@ -13,4 +13,4 @@ jobs:
       with:
           go-version: 1.15
     - name: Report metrics
-      run: ./report.sh
+      run: sh report.sh

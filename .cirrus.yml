@@ -1,4 +1,4 @@
 report_task:
   container:
     image: golang:latest
-  report_script: ./report.sh
+  report_script: sh report.sh

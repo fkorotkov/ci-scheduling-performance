@@ -1,2 +1,2 @@
 language: go
-before_install: ./report.sh
+before_install: sh report.sh

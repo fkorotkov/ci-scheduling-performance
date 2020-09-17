@@ -5,4 +5,4 @@ jobs:
       - image: circleci/golang:latest
     steps:
       - checkout
-      - run: ./report.sh
+      - run: sh report.sh
