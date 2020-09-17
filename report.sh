@@ -36,4 +36,4 @@ curl -i --retry 3 \
       ],
       \"sha\":\"${SHA}\"
     }" \
-    https://seriesci.com/api/fkorotkov/ci-sheduling-performance/:series/many
+    https://seriesci.com/api/fkorotkov/ci-scheduling-performance/:series/many
