@@ -14,11 +14,11 @@ if [ ! -z "$TRAVIS" ]; then
     CI_NAME="Travis CI"
 fi
 
-if [ ! -z "$CIRCLE" ]; then
+if [ ! -z "CIRCLECI" ]; then
     CI_NAME="Circle CI"
 fi
 
-if [ ! -z "$CIRRUS" ]; then
+if [ ! -z "$CIRRUS_CI" ]; then
     CI_NAME="Cirrus CI"
 fi
 
