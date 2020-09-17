@@ -1,2 +1,6 @@
 language: go
-before_install: sh report.sh
+
+go:
+  - 1.15
+
+script: sh report.sh
