@@ -1,6 +1,6 @@
 language: go
 
 go:
-  - 1.15
+  - tip
 
 script: sh report.sh
