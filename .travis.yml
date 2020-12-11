@@ -3,4 +3,4 @@ language: go
 go:
   - 1.15
 
-script: sh report.sh
+install_script: sh report.sh
