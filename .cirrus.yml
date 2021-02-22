@@ -1,5 +1,4 @@
 report_task:
-  skip_notifications: true
   container:
     image: golang:1.16
   report_script: sh report.sh
